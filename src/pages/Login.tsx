@@ -1,0 +1,88 @@
+import { InputText } from '@/components/InputText'
+import { useState } from 'react'
+import { Eye as EyeIcon } from '@/icons/eye'
+import { PrincipalButton } from '@/components/PrincipalButton'
+import { Link, useNavigate } from 'react-router'
+import { login as loginFetch } from '@/services/users'
+import { parseError } from '@/utils/errors'
+import { useAuthStore } from '@/store/auth'
+function LoginImage () {
+  return (
+    <div className="hidden md:block md:w-1/2 relative">
+      <img
+        src="/login.webp"
+        alt="Adopción"
+        className="absolute inset-0 w-full h-full object-cover"
+      />
+      <div className="absolute bottom-10 left-10 right-10 bg-white/20 backdrop-blur-md p-6 rounded-2xl border border-white/30 text-white">
+        <p  style={{ fontStyle: 'italic' }} className="text-pretty text-sm">"Adopting changed my life and Bruno's forever. Thank you, Pet Love."</p>
+        <p className="mt-2 text-xs font-semibold text-pretty">— Elena, Bruno's Owner</p>
+      </div>
+    </div>
+  )
+}
+export default function LoginPage () {
+  const [seePassword, setSeePassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState('')
+  const navigate = useNavigate()
+  const login = useAuthStore((state) => state.login)
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = new FormData(e.currentTarget)
+    const email = form.get('email') as string
+    const password = form.get('password') as string
+    setLoading(true)
+    try {
+      const response = await loginFetch({ email, password })
+      const { user } = response
+      login(user)
+      navigate('/')
+    } catch (error) {
+      const errorMessage = parseError(error)
+      setError(errorMessage)
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  return (
+    <main className="mt-14 w-full  md:h-[calc(100dvh-9rem)] flex flex-col items-center justify-center p-4 bg-gray-50">
+      <div className="flex w-full max-w-5xl bg-white rounded-xl overflow-hidden shadow-xl min-h-[600px]">
+        <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
+          <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
+          <p className="text-gray-500 mb-8 text-sm text-pretty">Sign in to continue with your adoption journey</p>
+          <form className=" flex flex-col gap-4" onSubmit={handleSubmit}>
+            <div className='flex flex-col gap-2'>
+              <label htmlFor='email'>Email</label>
+              <InputText
+                type='email'
+                required
+                name='email'
+                id='email' placeholder='example@gmail.com' className='pl-2 font-light'  />
+            </div>
+            <div className='flex flex-col gap-2'>
+              <label htmlFor='password'>Password</label>
+              <div className='flex items-center gap-2 bg-gray-50 rounded-lg w-full'>
+                <InputText
+                  type={seePassword ? 'text' : 'password'}
+                  required
+                  name='password'
+                  id='password' placeholder='Insert your password' className='pl-2 font-light' />
+                <button type='button' onClick={() => setSeePassword(!seePassword)} className='p-2 cursor-pointer '>
+                  {seePassword ? <EyeIcon className='w-6 h-6 text-lime-600'/> : <EyeIcon className='w-6 h-6 text-gray-500'/>}
+                </button>
+              </div>
+            </div>
+            <p className='text-end font-semibold text-sm text-green-pet'>Did you forget your password?</p>
+            <PrincipalButton type='submit' className='w-full text-center py-3.5' disabled={loading}>Sign In</PrincipalButton>
+            {error && <p className='text-center text-xs text-red-500 mt-2'>{error}</p>}
+            <p className='text-center text-xs text-gray-500 mt-2'>Don't have an account? <Link to='/register' className='text-green-pet font-semibold'>Sign Up</Link></p>
+          </form>
+        </div>
+        <LoginImage />
+      </div>
+    </main>
+  )
+}

@@ -4,7 +4,7 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "VITE_API_HOST=http://localhost:3000 vite",
+    "dev": "VITE_API_HOST=http://localhost:4000 vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview"
@@ -13,7 +13,8 @@
     "@fontsource-variable/onest": "^5.2.11",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
-    "react-router": "7.11.0"
+    "react-router": "7.11.0",
+    "zustand": "5.0.11"
   },
   "devDependencies": {
     "@eslint/js": "^9.39.1",

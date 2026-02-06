@@ -20,7 +20,7 @@ const RowItem = ({ icon, text }: { icon: React.ReactNode, text: string }) => {
     </div>
   )
 }
-export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,location, categories }, index }: Props) => {
+export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,location, is_urgent, is_vaccinated }, index }: Props) => {
   return (
     <article className='flex flex-col rounded-xl gap-2 group shadow-xs bg-white shadow-[#e5f3e6]'>
       <picture className='overflow-hidden rounded-t-xl relative'>
@@ -30,7 +30,7 @@ export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,
           scale-110
           group-hover:scale-100 transition-all duration-300'
         />
-        <PetTag isNew={index === 0} isUrgent={categories.urgent} isVaccinated={categories.vaccinated} className='absolute bottom-3 left-3'/>
+        <PetTag isNew={index === 0} isUrgent={is_urgent} isVaccinated={is_vaccinated} className='absolute bottom-3 left-3'/>
         <FavoriteButton isFavorite={true} className='absolute top-3 right-3'/>
       </picture>
       <div className='px-5 py-4 flex flex-col items-stretch gap-3'>

@@ -3,7 +3,20 @@ declare global {
     toSorted (comparator?: (a: T, b: T) => number): T[]
   }
 }
+type LoginParams = {
+  email: string
+  password: string
+}
 
+interface LoginResponse {
+  user: User
+}
+
+interface User {
+  id: string
+  email: string
+  name: string
+}
 interface PetsResponse {
   data: Pet[]
   total: number
@@ -70,7 +83,12 @@ export interface Pet {
   gender: Gender;
   description: string;
   images: string[];
-  categories: Categories;
+  is_urgent: boolean;
+  is_friendly: boolean;
+  is_trained: boolean;
+  energy_level: EnergyLevel;
+  is_vaccinated: boolean;
+  is_neutered: boolean;
   location: string;
   created_at: string;
 }
@@ -80,13 +98,10 @@ export enum AgeUnit {
   Years = 'years',
 }
 
-export interface Categories {
-  urgent: boolean;
-  friendly: boolean;
-  trained: boolean;
-  energy_level: string;
-  vaccinated: boolean;
-  neutered: boolean;
+export enum EnergyLevel {
+  Low = 'low',
+  Medium = 'medium',
+  High = 'high',
 }
 
 export enum Gender {

@@ -35,7 +35,7 @@ export const Header = () => {
         ))}
       </nav>
       <div className="flex-1 flex justify-end" >
-        <AnchorButton href="/sing-in" >
+        <AnchorButton href="/login" >
           Sign In
         </AnchorButton>
       </div>

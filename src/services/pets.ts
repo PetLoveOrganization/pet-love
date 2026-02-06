@@ -1,4 +1,4 @@
-import { API_HOST } from '@/config'
+import { apiFetch } from '@/api/client'
 import { QuickActions, type Filters, type PetsResponse } from '@/types.d'
 export const getAllPets = ({ filters, actions, offset, limit }: { filters: Filters, actions: QuickActions, offset: number, limit: number }): Promise<PetsResponse> => {
   const params = new URLSearchParams()
@@ -10,10 +10,5 @@ export const getAllPets = ({ filters, actions, offset, limit }: { filters: Filte
   params.append('offset', offset.toString())
   params.append('limit', limit.toString())
   filters.species.forEach(species => params.append('species', species))
-  return fetch(`${API_HOST}/pets?${params.toString()}`)
-    .then(response => response.json())
-    .catch(error => {
-      console.error('Error fetching pets:', error)
-      throw 'Error fetching pets'
-    })
+  return apiFetch<PetsResponse>(`/pets?${params.toString()}`)
 }
