@@ -47,9 +47,10 @@ export default function LoginPage () {
     }
   }
 
+  const textButton = loading ? 'Signing in...' : 'Sign In'
   return (
-    <main className="mt-14 w-full  md:h-[calc(100dvh-9rem)] flex flex-col items-center justify-center p-4 bg-gray-50">
-      <div className="flex w-full max-w-5xl bg-white rounded-xl overflow-hidden shadow-xl min-h-[600px]">
+    <main className="grow mt-14 w-full flex flex-col items-center justify-center p-4 bg-gray-50">
+      <div className="flex w-full max-w-5xl bg-white rounded-xl overflow-hidden shadow-xl min-h-[600px] self-center">
         <div className="w-full md:w-1/2 p-10 flex flex-col justify-center">
           <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
           <p className="text-gray-500 mb-8 text-sm text-pretty">Sign in to continue with your adoption journey</p>
@@ -76,7 +77,7 @@ export default function LoginPage () {
               </div>
             </div>
             <p className='text-end font-semibold text-sm text-green-pet'>Did you forget your password?</p>
-            <PrincipalButton type='submit' className='w-full text-center py-3.5' disabled={loading}>Sign In</PrincipalButton>
+            <PrincipalButton type='submit' className='w-full text-center py-3.5' disabled={loading}>{textButton}</PrincipalButton>
             {error && <p className='text-center text-xs text-red-500 mt-2'>{error}</p>}
             <p className='text-center text-xs text-gray-500 mt-2'>Don't have an account? <Link to='/register' className='text-green-pet font-semibold'>Sign Up</Link></p>
           </form>
@@ -84,5 +85,6 @@ export default function LoginPage () {
         <LoginImage />
       </div>
     </main>
+
   )
 }

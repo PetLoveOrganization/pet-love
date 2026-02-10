@@ -6,6 +6,7 @@ import type { Pet } from '@/types'
 import { BlackAButton } from './BlackAButton'
 import { PetTag } from './PetTag'
 import { FavoriteButton } from './Favorites/FavoriteButton'
+import { useLocation } from 'react-router'
 
 interface Props {
   pet: Pet,
@@ -20,7 +21,8 @@ const RowItem = ({ icon, text }: { icon: React.ReactNode, text: string }) => {
     </div>
   )
 }
-export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,location, is_urgent, is_vaccinated }, index }: Props) => {
+export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,location: address, is_urgent, is_vaccinated }, index }: Props) => {
+  const location = useLocation()
   return (
     <article className='flex flex-col rounded-xl gap-2 group shadow-xs bg-white shadow-[#e5f3e6]'>
       <picture className='overflow-hidden rounded-t-xl relative'>
@@ -41,9 +43,9 @@ export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,
         <p className='text-green-700 text-lg font-semibold text-nowrap text-ellipsis overflow-hidden leading-none'>{breed}</p>
         <div className='flex flex-wrap gap-3 items-start mt-1 mb-3'>
           <RowItem icon={<CalendarIcon  className='text-gray-500 w-4 h-4' />} text={`${age} ${age_unit}`} />
-          <RowItem icon={<LocationIcon className='text-gray-500 w-4 h-4' />} text={location} />
+          <RowItem icon={<LocationIcon className='text-gray-500 w-4 h-4' />} text={address} />
         </div>
-        <BlackAButton href={`/pet/${id}`} className=''>
+        <BlackAButton to={`/adopt/${id}`} state={{ fromSearch: location.search }} className=''>
           Meet {name.split(' ')[0]}
         </BlackAButton>
       </div>
