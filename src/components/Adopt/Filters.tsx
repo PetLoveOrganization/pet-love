@@ -9,6 +9,12 @@ interface Props {
   onReset: () => void
   initialFilters: FiltersType
 }
+
+const healthOptions = [
+  { label: 'Sterilized', value: 'sterilized' },
+  { label: 'Vaccinated', value: 'vaccinated' },
+  { label: 'Dewormed', value: 'dewormed' },
+]
 export const Filters = ({ onReset, initialFilters }: Props) => {
   const idDog = useId()
   const idCat = useId()
@@ -67,7 +73,7 @@ export const Filters = ({ onReset, initialFilters }: Props) => {
           <RadioButton name='age' text='12+ years' value={4} id='4' ref={age1Ref} defaultChecked={initialFilters.age === 4}/>
         </div>
       </section>
-      <section className='py-7'>
+      <section className='py-7 border-b border-gray-200'>
         <h3 className='font-semibold text-xl text-gray-500'>GENDER</h3>
         <div className='flex flex-row gap-4 mt-2'>
           {
@@ -75,6 +81,14 @@ export const Filters = ({ onReset, initialFilters }: Props) => {
               <RadioButton key={gender} text={gender} name='gender' value={gender} id={gender} defaultChecked={initialFilters.gender === gender}/>
             ))
           }
+        </div>
+      </section>
+      <section className='py-7'>
+        <h3 className='font-semibold text-xl text-gray-500'>HEALTH</h3>
+        <div className='flex flex-col gap-2 mt-2'>
+          {healthOptions.map((health) => (
+            <RadioButton key={health.value} text={health.label} name='health' value={health.value} id={health.value} defaultChecked={initialFilters.health === health.value}/>
+          ))}
         </div>
       </section>
 

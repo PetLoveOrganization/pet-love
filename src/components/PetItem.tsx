@@ -23,10 +23,11 @@ const RowItem = ({ icon, text }: { icon: React.ReactNode, text: string }) => {
 }
 export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,location: address, is_urgent, is_vaccinated }, index }: Props) => {
   const location = useLocation()
+  const { image_url } = images[0]
   return (
     <article className='flex flex-col rounded-xl gap-2 group shadow-xs bg-white shadow-[#e5f3e6]'>
       <picture className='overflow-hidden rounded-t-xl relative'>
-        <img src={images[0]} alt={name}
+        <img src={image_url} alt={name}
           loading='lazy'
           className='w-full aspect-9/7 object-cover
           scale-110

@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import  type { Filters as FiltersType } from '../types.d'
+import  type { Filters as FiltersType, PetHealth } from '../types.d'
 
 interface UseSearchFormProps {
   onChange: (filters: FiltersType) => void
@@ -28,13 +28,16 @@ export const useSearchForm = ({ onChange, filters }: UseSearchFormProps) => {
     const species = formData.getAll('species')
     const age = formData.get('age')
     const gender = formData.get('gender')
+    const health = formData.get('health')
     const sortBy = formData.get('sort')
     onChange({
       ...filters,
       sortBy: sortBy as string,
       species: species as string[],
       age: age ? Number(age) : undefined,
-      gender: gender as string })
+      gender: gender as string,
+      health: health as PetHealth,
+    })
   }
   return {
     handleChange,

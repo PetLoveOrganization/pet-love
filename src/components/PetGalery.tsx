@@ -1,19 +1,24 @@
+import { XIcon } from '@/icons/X'
+import type { PetImage } from '@/types'
 import React, { useState, useEffect, useCallback } from 'react'
 import Zoom from 'react-medium-image-zoom'
 import 'react-medium-image-zoom/dist/styles.css'
 
 interface PetGalleryProps {
-  images: string[];
+  images: PetImage[]
 }
 
 export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
-  const [selectedImage, setSelectedImage] = useState<string>(images[0] || '')
+  const [selectedImage, setSelectedImage] = useState<string>(() => {
+    const primaryImage = images.find((img) => img.is_primary)
+    return primaryImage?.image_url || images[0].image_url
+  })
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
   const [currentIndex, setCurrentIndex] = useState<number>(0)
-
+  const currentImage = images[currentIndex]
   useEffect(() => {
     if (images.length > 0) {
-      const idx = images.indexOf(selectedImage)
+      const idx = images.indexOf(currentImage)
       setCurrentIndex(idx !== -1 ? idx : 0)
     }
   }, [selectedImage, images])
@@ -49,30 +54,32 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
     )
   }
 
+  const { image_url } = currentImage
+
   return (
-    <div className="flex flex-col gap-6 max-w-4xl ">
+    <div className="flex flex-col gap-6 w-full ">
       <div
         className="relative group w-full aspect-video rounded-3xl overflow-hidden bg-gray-200 shadow-2xl cursor-zoom-in"
         onClick={() => {
-          setSelectedImage(images[currentIndex])
+          setSelectedImage(image_url)
           setIsModalOpen(true)
         }}
       >
         <img
           key={currentIndex}
-          src={images[currentIndex]}
+          src={image_url}
           alt="Vista principal"
           className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110 animate-pet-fade"
         />
       </div>
 
       <div className="grid grid-cols-4 sm:grid-cols-6 md:grid-cols-8 gap-3">
-        {images.map((img, index) => (
+        {images.map(({ image_url }, index) => (
           <button
-            key={`${img}-${index}`}
+            key={`${image_url}-${index}`}
             onClick={() => {
               setCurrentIndex(index)
-              setSelectedImage(img)
+              setSelectedImage(image_url)
             }}
             className={`relative aspect-square rounded-xl overflow-hidden transition-all duration-300 transform ${
               currentIndex === index
@@ -80,7 +87,7 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
                 : 'opacity-50 hover:opacity-100 hover:scale-105'
             }`}
           >
-            <img src={img} className="w-full h-full object-cover" alt={`Miniatura ${index}`} loading="lazy" />
+            <img src={image_url} className="w-full h-full object-cover" alt={`Miniatura ${index}`} loading="lazy" />
           </button>
         ))}
       </div>
@@ -94,9 +101,7 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
             className="absolute top-8 right-8 text-white/70 hover:text-white transition-colors z-110"
             onClick={() => setIsModalOpen(false)}
           >
-            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
-            </svg>
+            <XIcon className="w-10 h-10" />
           </button>
 
           <div className="relative w-full h-full flex items-center justify-center p-4">
@@ -114,7 +119,7 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
             <div className="max-w-5xl w-full flex items-center justify-center" onClick={(e) => e.stopPropagation()}>
               <Zoom>
                 <img
-                  src={images[currentIndex]}
+                  src={image_url}
                   alt="Mascota en detalle"
                   className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
                 />

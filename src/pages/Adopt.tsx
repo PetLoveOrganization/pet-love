@@ -4,12 +4,13 @@ import { QuickActions } from '@/components/Adopt/QuickActions'
 import { Filters } from '@/components/Adopt/Filters'
 import { Pagination } from '@/components/Pagination'
 import { useFilters } from '@/hooks/useFilters'
+import { Loading } from '@/components/Loading'
 
 export default function AdoptPage () {
   const {
     pets,
     filters,
-    quickActions,
+    petStates,
     currentPage,
     handleChange,
     handleQuickActionsChange,
@@ -38,8 +39,8 @@ export default function AdoptPage () {
             <Filters onReset={handleReset} initialFilters={filters}/>
           </aside>
           <section className='w-full md:w-3/4 xl:w-4/5'>
-            <QuickActions quickActions={quickActions} initialFilters={filters} onQuickActionsChange={handleQuickActionsChange}/>
-            {loading && <p className='text-center'>Loading...</p>}
+            <QuickActions petStates={petStates} initialFilters={filters} onQuickActionsChange={handleQuickActionsChange}/>
+            {loading && <Loading />}
             {pets.length === 0 && !loading && <p className='text-center'>No pets found</p>}
             {!loading && <PetList pets={pets} />}
             <Pagination currentPage={currentPage} totalPages={totalPages} onPageChange={handlePageChange}/>

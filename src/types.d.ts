@@ -16,6 +16,7 @@ interface User {
   id: string
   email: string
   name: string
+  avatar?: string
 }
 interface PetsResponse {
   data: Pet[]
@@ -29,6 +30,7 @@ export interface Filters {
   gender?: string,
   sortBy: string,
   text: string,
+  health?: PetHealth
 }
 export const initialState: FiltersType = {
   text: '',
@@ -45,10 +47,17 @@ export const PetAges: { [key: number]: number[] } = {
   4: [12, 99],
 }
 
-export enum QuickActions {
+export enum PetStates {
   ALL = 'all',
   URGENT = 'urgent',
+  FRIENDLY = 'friendly',
+  TRAINED = 'trained',
+}
+
+export enum PetHealth {
   VACCINATED = 'vaccinated',
+  DEWORMED = 'dewormed',
+  STERILIZED = 'sterilized',
 }
 export enum SortBy {
   LATEST = 'latest',
@@ -82,15 +91,34 @@ export interface Pet {
   color: string;
   gender: Gender;
   description: string;
-  images: string[];
+  images: PetImage[];
   is_urgent: boolean;
   is_friendly: boolean;
   is_trained: boolean;
-  energy_level: EnergyLevel;
+  energy_level: Level;
+  affection_level: Level
+  exercise_needs: Level
   is_vaccinated: boolean;
-  is_neutered: boolean;
+  vaccines?: string ;
+  is_dewormed: boolean;
+  dewormed_info?: string;
+  is_sterilized: boolean;
   location: string;
   created_at: string;
+  owner?: User;
+  requirements: Requirement[];
+  recovery_fee: number;
+
+}
+
+export interface Requirement {
+  id?: string;
+  icon_name: string;
+  description: string;
+}
+export interface PetImage {
+  image_url: string;
+  is_primary: boolean;
 }
 
 export enum AgeUnit {
@@ -98,10 +126,11 @@ export enum AgeUnit {
   Years = 'years',
 }
 
-export enum EnergyLevel {
+export enum Level {
   Low = 'low',
   Medium = 'medium',
   High = 'high',
+  VeryHigh = 'very high',
 }
 
 export enum Gender {

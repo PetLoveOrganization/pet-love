@@ -1,4 +1,4 @@
-import { initialState, type Pet, type Filters as FiltersType, QuickActions as QuickActionsType, SortBy } from '@/types.d'
+import { initialState, type Pet, type Filters as FiltersType, PetStates as PetStatesType, SortBy, PetHealth } from '@/types.d'
 import { useSearchForm } from '@/hooks/useSearchForm'
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router'
@@ -17,20 +17,26 @@ export const useFilters = () => {
     const age = Number.isNaN(ageValue) || ageValue == null ? undefined : Number(ageValue)
     const gender = searchParams.get('gender') || undefined
     const sortBy = searchParams.get('sortBy') || SortBy.LATEST
+    const health = searchParams.get('health') || undefined
+    let healthValue: PetHealth | undefined = undefined
+    if (Object.values(PetHealth).includes(health as PetHealth)) {
+      healthValue = health as PetHealth
+    }
     return {
       text,
       species,
       age,
       gender,
       sortBy,
+      health: healthValue,
     }
   })
-  const [quickActions, setQuickActions] = useState<QuickActionsType>(() => {
-    const action = searchParams.get('actions')
-    if (Object.values(QuickActionsType).includes(action as QuickActionsType)) {
-      return action as QuickActionsType
+  const [petStates, setPetStates] = useState<PetStatesType>(() => {
+    const states = searchParams.get('states')
+    if (Object.values(PetStatesType).includes(states as PetStatesType)) {
+      return states as PetStatesType
     }
-    return QuickActionsType.ALL
+    return PetStatesType.ALL
   })
   const [currentPage, setCurrentPage] = useState(() => {
     const page = searchParams.get('page')
@@ -46,7 +52,7 @@ export const useFilters = () => {
     function fetchPets () {
       setLoading(true)
       const offset = (currentPage - 1) * RESULTS_PER_PAGE
-      getAllPets({ filters, actions: quickActions, offset, limit: RESULTS_PER_PAGE })
+      getAllPets({ filters, actions: petStates, offset, limit: RESULTS_PER_PAGE })
         .then(response => {
           setPets(response.data)
           setTotal(response.total)
@@ -61,7 +67,7 @@ export const useFilters = () => {
     }
     fetchPets()
 
-  }, [filters, quickActions, currentPage])
+  }, [filters, petStates, currentPage])
 
   useEffect(() => {
     setSearchParams((params) => {
@@ -69,29 +75,31 @@ export const useFilters = () => {
       params.delete('species')
       params.delete('age')
       params.delete('gender')
-      params.delete('actions')
+      params.delete('states')
+      params.delete('health')
       params.delete('sortBy')
       params.delete('page')
       if(filters.text) params.set('text', filters.text)
       filters.species.forEach(species => params.append('species', species))
       if(filters.age != null) params.set('age', filters.age.toString())
       if(filters.gender != null) params.set('gender', filters.gender)
-      if(quickActions !== QuickActionsType.ALL) params.set('actions', quickActions)
+      if(petStates !== PetStatesType.ALL) params.set('states', petStates)
+      if(filters.health != null) params.set('health', filters.health)
       if(filters.sortBy !== SortBy.LATEST) params.set('sortBy', filters.sortBy)
       if(currentPage > 1) params.set('page', currentPage.toString())
       return params
     })
-  }, [filters, quickActions, currentPage])
+  }, [filters, petStates, currentPage])
   const totalPages = Math.ceil(total / RESULTS_PER_PAGE)
 
-  const handleQuickActionsChange = (quickActions: QuickActionsType) => {
-    setQuickActions(quickActions)
+  const handleQuickActionsChange = (petStates: PetStatesType) => {
+    setPetStates(petStates)
     setCurrentPage(1)
   }
 
   const handleReset = () => {
     setFilters(initialState)
-    setQuickActions(QuickActionsType.ALL)
+    setPetStates(PetStatesType.ALL)
     setCurrentPage(1)
   }
 
@@ -102,7 +110,7 @@ export const useFilters = () => {
   return {
     pets,
     filters,
-    quickActions,
+    petStates,
     currentPage,
     handleChange,
     handleQuickActionsChange,
