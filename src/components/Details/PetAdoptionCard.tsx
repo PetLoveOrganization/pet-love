@@ -54,7 +54,7 @@ export const PetAdoptionCard = ({
 }: PetAdoptionCardProps) => {
   const fee = adoptionFee > 0 ? `$${adoptionFee.toLocaleString()} ${currency}` : 'Free'
   return (
-    <div className="bg-white rounded-3xl shadow-xl p-8    md:min-w-xl max-w-md border-t-8 border-green-pet">
+    <div className="bg-white rounded-3xl shadow-xl p-8 border-t-8 border-green-pet w-full">
       <div className="text-center mb-6">
         <span className="text-slate-400 text-xs font-bold tracking-widest uppercase">
           Adoption Fee
