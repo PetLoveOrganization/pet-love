@@ -55,26 +55,31 @@ export default function LoginPage () {
           <h1 className="text-3xl font-bold mb-2">Welcome back!</h1>
           <p className="text-gray-500 mb-8 text-sm text-pretty">Sign in to continue with your adoption journey</p>
           <form className=" flex flex-col gap-4" onSubmit={handleSubmit}>
-            <div className='flex flex-col gap-2'>
+            <div className='flex flex-col gap-2 '>
               <label htmlFor='email'>Email</label>
               <InputText
                 type='email'
                 required
                 name='email'
+                variant='secondary'
                 id='email' placeholder='example@gmail.com' className='pl-2 font-light'  />
             </div>
             <div className='flex flex-col gap-2'>
               <label htmlFor='password'>Password</label>
-              <div className='flex items-center gap-2 bg-gray-50 rounded-lg w-full'>
-                <InputText
-                  type={seePassword ? 'text' : 'password'}
-                  required
-                  name='password'
-                  id='password' placeholder='Insert your password' className='pl-2 font-light' />
-                <button type='button' onClick={() => setSeePassword(!seePassword)} className='p-2 cursor-pointer '>
-                  {seePassword ? <EyeIcon className='w-6 h-6 text-lime-600'/> : <EyeIcon className='w-6 h-6 text-gray-500'/>}
-                </button>
-              </div>
+
+              <InputText
+                type={seePassword ? 'text' : 'password'}
+                required
+                iconPosition='right'
+                icon = {
+                  <button type='button' onClick={() => setSeePassword(!seePassword)} className='cursor-pointer hover:bg-gray-200 p-2 -mr-1.5 rounded-full transition-colors shrink-0 absolute right-2 top-1/2 -translate-y-1/2'>
+                    {seePassword ? <EyeIcon className='size-4 text-lime-600'/> : <EyeIcon className='size-4 text-gray-500'/>}
+                  </button>
+                }
+                name='password'
+                variant='secondary'
+                id='password' placeholder='Insert your password' className='pl-2 font-light relative' />
+
             </div>
             <p className='text-end font-semibold text-sm text-green-pet'>Did you forget your password?</p>
             <PrincipalButton type='submit' className='w-full text-center py-3.5' disabled={loading}>{textButton}</PrincipalButton>

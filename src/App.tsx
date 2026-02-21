@@ -14,6 +14,7 @@ import DetailsPage from '@/pages/Details'
 import { ProtectedRoute } from '@/components/Auth/ProtectedRoute'
 import { useAuthStore } from '@/store/auth'
 import { useEffect } from 'react'
+import { RegisterPage } from './pages/Register'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
 
@@ -30,6 +31,7 @@ function App () {
           <Route path=":id" element={<DetailsPage />} />
         </Route>
         <Route path='login' element={<LoginPage />} />
+        <Route path='register' element={<RegisterPage />} />
         <Route element={<ProtectedRoute />}>
           <Route path='profile' element={<ProfilePage />} />
         </Route>

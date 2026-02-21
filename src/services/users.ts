@@ -1,11 +1,19 @@
 import { apiFetch } from '@/api/client'
-import type { LoginParams, LoginResponse, User } from '@/types'
+import type { LoginParams, AuthResponse, RegisterParams, User } from '@/types'
 
-export const login = ({ email, password }: LoginParams): Promise<LoginResponse> => {
-  return apiFetch<LoginResponse>('/auth/login', {
+export const login = ({ email, password }: LoginParams): Promise<AuthResponse> => {
+  return apiFetch<AuthResponse>('/auth/login', {
     method: 'POST',
     credentials: 'include',
     body: JSON.stringify({ email, password }),
+  })
+}
+
+export const register = ({ name, email, password }: RegisterParams): Promise<AuthResponse> => {
+  return apiFetch<AuthResponse>('/auth/register', {
+    method: 'POST',
+    credentials: 'include',
+    body: JSON.stringify({ name, email, password }),
   })
 }
 

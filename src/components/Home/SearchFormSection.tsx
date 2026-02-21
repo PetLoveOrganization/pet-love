@@ -18,12 +18,21 @@ export const SearchFormSection = () => {
 
   return (
     <form onSubmit={handleSubmit} className=' max-w-3xl mx-auto flex gap-3 w-full bg-white p-3 rounded-lg border border-lime-400/20 shadow-lg '>
-      <InputText placeholder='Search by name, race.' name='text'>
-        <SearchIcon className='size-5 text-lime-700'/>
-      </InputText>
-      <InputText placeholder='Location (city)' name='location'>
-        <LocationIcon className='size-5 text-lime-700'/>
-      </InputText>
+      <InputText
+        name='text'
+        placeholder='Search by name, race.'
+        icon={<SearchIcon className='size-5 text-lime-700'/>}
+        iconPosition='left'
+        hasBorder={false}
+        variant='primary'
+      />
+      <InputText
+        placeholder='Location (city)' name='location'
+        icon={<LocationIcon className='size-5 text-lime-700' />}
+        iconPosition='left'
+        hasBorder={false}
+        variant='primary'
+      />
       <PrincipalButton type='submit' className='py-3 gap-1'>
         <PetLeg className='size-5'/>
               Search

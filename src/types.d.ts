@@ -8,7 +8,11 @@ type LoginParams = {
   password: string
 }
 
-interface LoginResponse {
+type RegisterParams = LoginParams & {
+  name: string
+}
+
+interface AuthResponse {
   user: User
 }
 
