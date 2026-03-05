@@ -26,7 +26,7 @@ export const logout = (): Promise<void> => {
 }
 
 export const getUser = (): Promise<User> => {
-  return apiFetch<User>('/auth/me', {
+  return apiFetch<User>('/account/me', {
     credentials: 'include',
   })
 }

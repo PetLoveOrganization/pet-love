@@ -10,7 +10,7 @@ export function HeroSection () {
         <p className='text-lg lg:text-xl text-pretty'>Explore thousands of pets waiting for a loving home. Your perfect companion is just a click away.
         </p>
         <div className='flex gap-2'>
-          <AnchorButton href="/adopt" className='py-3' hasShadow={true}>
+          <AnchorButton href="/pets" className='py-3' hasShadow={true}>
               Adopt now
           </AnchorButton>
           <AnchorButton href="#how-it-works" className='bg-transparent border border-green-400/20 py-3' isHasLink={true}>

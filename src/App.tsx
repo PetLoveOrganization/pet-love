@@ -5,7 +5,7 @@ import { Header } from '@/components/Header'
 import { Footer } from '@/components/footer'
 
 import HomePage from '@/pages/Home'
-import AdoptPage from '@/pages/Adopt'
+import PetsPage from '@/pages/Pets'
 import NotFoundPage from '@/pages/404'
 import LoginPage from '@/pages/Login'
 import ProfilePage from '@/pages/Profile'
@@ -15,6 +15,8 @@ import { ProtectedRoute } from '@/components/Auth/ProtectedRoute'
 import { useAuthStore } from '@/store/auth'
 import { useEffect } from 'react'
 import { RegisterPage } from './pages/Register'
+import AdoptForm from './pages/Adopt'
+import PetDetails from './pages/PetDetails'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
 
@@ -26,9 +28,14 @@ function App () {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="adopt"  >
-          <Route index element={<AdoptPage />} />
-          <Route path=":id" element={<DetailsPage />} />
+        <Route path="pets"  >
+          <Route index element={<PetsPage />} />
+          <Route path=":id" element={<DetailsPage />} >
+            <Route index element={<PetDetails />} />
+            <Route element={<ProtectedRoute />}>
+              <Route path="adopt" element={<AdoptForm />} />
+            </Route>
+          </Route>
         </Route>
         <Route path='login' element={<LoginPage />} />
         <Route path='register' element={<RegisterPage />} />

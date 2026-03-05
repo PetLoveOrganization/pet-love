@@ -1,17 +1,11 @@
 import React from 'react'
-import { clsx, type ClassValue } from 'clsx'
-import { twMerge } from 'tailwind-merge'
-
-// Helper para limpiar clases de Tailwind
-function cn (...inputs: ClassValue[]) {
-  return twMerge(clsx(inputs))
-}
+import { cn } from '@/utils/utils'
 
 export type InputTextProps = React.InputHTMLAttributes<HTMLInputElement> & {
   icon?: React.ReactNode
   iconPosition?: 'left' | 'right'
   hasBorder?: boolean
-  variant?: 'primary' | 'secondary' | 'ghost'
+  variant?: 'primary' | 'secondary' | 'tertiary' | 'ghost'
 };
 
 export const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(
@@ -20,6 +14,7 @@ export const InputText = React.forwardRef<HTMLInputElement, InputTextProps>(
     const variants = {
       primary: 'bg-white text-gray-900',
       secondary: 'bg-gray-50 text-gray-800',
+      tertiary: 'bg-lime-300/5 text-gray-800 border-gray-300/40',
       ghost: 'bg-transparent',
     }
 

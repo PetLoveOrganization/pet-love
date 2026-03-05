@@ -25,7 +25,7 @@ export const AdoptionRequirements = ({ requirements }: Props) => {
   return (
     <article>
       <header className='flex items-center gap-2'>
-        <FileCheckIcon className='size-5 text-green-pet'/>
+        <FileCheckIcon className='size-6 text-green-pet'/>
         <h3 className='text-lg md:text-2xl  font-semibold'>Adoption Requirements</h3>
       </header>
       <div className='bg-white p-6 mt-4 rounded-xl shadow-md flex flex-col gap-4' >

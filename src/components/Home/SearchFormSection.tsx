@@ -12,7 +12,7 @@ export const SearchFormSection = () => {
     const form = new FormData(e.currentTarget)
     const text = form.get('text') as string
     const location = form.get('location') as string
-    const url = `/adopt?${text ? `text=${encodeURIComponent(text)}` : ''}${location ? `&location=${encodeURIComponent(location)}` : ''}`
+    const url = `/pets?${text ? `text=${encodeURIComponent(text)}` : ''}${location ? `&location=${encodeURIComponent(location)}` : ''}`
     navigateTo.navigateTo(url)
   }
 

@@ -12,7 +12,7 @@ const navItems = [
   {
     label: 'adopt',
     title: 'Adopt',
-    href: '/adopt',
+    href: '/pets',
   },
   {
     label: 'donate',

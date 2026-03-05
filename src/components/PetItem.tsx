@@ -46,7 +46,7 @@ export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,
           <RowItem icon={<CalendarIcon  className='text-gray-500 w-4 h-4' />} text={`${age} ${age_unit}`} />
           <RowItem icon={<LocationIcon className='text-gray-500 w-4 h-4' />} text={address} />
         </div>
-        <BlackAButton to={`/adopt/${id}`} state={{ fromSearch: location.search }} className=''>
+        <BlackAButton to={`/pets/${id}`} state={{ fromSearch: location.search }} className=''>
           Meet {name.split(' ')[0]}
         </BlackAButton>
       </div>
