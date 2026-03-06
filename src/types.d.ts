@@ -112,13 +112,25 @@ export interface Pet {
   owner?: User;
   requirements: Requirement[];
   recovery_fee: number;
-  user_context?: UserContext
+  user_context: UserContext
 }
 
 export interface UserContext {
-  has_applied: boolean;
-  application_status: string;
-  applied_at: string;
+  has_profile: boolean;
+  profile?: PetAdopterProfile
+  application?: PetAdoptionApplication
+}
+
+export interface PetAdopterProfile {
+  phone_number: string
+  address: string
+  housing: string
+  other_pets: string
+}
+
+export interface PetAdoptionApplication {
+  status: string
+  at: string
 }
 
 export interface Requirement {

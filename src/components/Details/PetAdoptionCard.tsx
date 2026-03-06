@@ -60,7 +60,7 @@ export const PetAdoptionCard = ({
       </div>
       <div className="mb-10">
         {
-          !user_context && (
+          !user_context.application && (
             <AnchorButton
               href={adoptionLink}
               hasShadow
@@ -72,11 +72,11 @@ export const PetAdoptionCard = ({
           )
         }
         {
-          user_context && (
+          user_context.application && (
             <AnchorButton
               href={adoptionLink}
               hasShadow
-              variant='secondary'
+              variant='primary'
               disabled
               className="w-full py-4 text-base lg:text-lg flex justify-center gap-2 group"
             >

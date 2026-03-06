@@ -13,7 +13,7 @@ export function OwnerDetails ({ owner }: { owner: User }) {
           <p className='text-gray-500 text-xs md:text-sm'>{owner?.email}</p>
         </div>
       </div>
-      <AnchorButton href="#how-it-works" className='bg-white border py-3 border-gray-400/20 text-sm' isHasLink={true}>
+      <AnchorButton href="#how-it-works" variant='secondary' isExternal={true}>
               See more pets
       </AnchorButton>
     </div>

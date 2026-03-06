@@ -28,7 +28,7 @@ export function AnchorButton ({
       'bg-green-pet text-white hover:bg-orange-300',
       hasShadow && 'shadow-lg shadow-green-pet/40 hover:shadow-orange-300/40',
     ),
-    secondary: 'bg-slate-200 text-slate-700 hover:bg-slate-300 border border-slate-300',
+    secondary: 'bg-white border py-3 border-gray-400/20 text-sm',
   }
 
   const disabledStyles = 'opacity-50 cursor-not-allowed pointer-events-none bg-gray-200 text-gray-400 shadow-none scale-100'

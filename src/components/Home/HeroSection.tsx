@@ -13,7 +13,7 @@ export function HeroSection () {
           <AnchorButton href="/pets" className='py-3' hasShadow={true}>
               Adopt now
           </AnchorButton>
-          <AnchorButton href="#how-it-works" className='bg-transparent border border-green-400/20 py-3' isHasLink={true}>
+          <AnchorButton href="#how-it-works" className='bg-transparent border border-green-400/20 py-3' variant='secondary'>
               How it works
           </AnchorButton>
         </div>

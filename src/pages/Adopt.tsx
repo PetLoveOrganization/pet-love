@@ -26,16 +26,18 @@ const housingOptions = {
 }
 
 export default function AdoptForm () {
-  const { pet } = useOutletContext<{ pet: Pet }>()
-  const user = useAuthStore((state) => state.user)
   const navigate = useNavigate()
+  const user = useAuthStore((state) => state.user)
+  const { pet } = useOutletContext<{ pet: Pet }>()
+  const { images, name, age, age_unit, species,is_sterilized, is_vaccinated , is_dewormed, user_context } = pet
+  const { profile } = user_context
   const { register, handleSubmit, control, formState: { errors, isSubmitting } } = useForm<AdoptionFormData>({
     resolver: zodResolver(adoptionSchema),
-    defaultValues: { housing: 'house' },
+    defaultValues: { housing: (profile?.housing || 'house') as 'house' | 'apartment' | 'patio', address: profile?.address || '', phone_number: profile?.phone_number, other_pets: profile?.other_pets },
   })
 
   useEffect(() => {
-    if(pet.user_context) {
+    if(pet.user_context?.application) {
       navigate(`/pets/${pet.id}`, { replace: true })
     }
   }, [pet, navigate])
@@ -53,7 +55,7 @@ export default function AdoptForm () {
 
   const { phone_number, address, other_pets, motivation } = errors
   const { name: userName, email } = user!
-  const { images, name, age, age_unit, species,is_sterilized, is_vaccinated , is_dewormed } = pet
+
   const ageText = `${age} ${age_unit}`
   const image = images.find((img) => img.is_primary)?.image_url || images[0].image_url
   const checks = {
@@ -72,7 +74,7 @@ export default function AdoptForm () {
   }
 
   const textButton = isSubmitting ? 'Requesting...' : 'Request Adoption'
-  if (pet.user_context?.has_applied) return null
+  if (pet.user_context?.application) return null
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <main className='mt-4 md:mt-8 max-w-7xl mx-auto flex gap-8 flex-col lg:flex-row  items-center lg:items-start '>
