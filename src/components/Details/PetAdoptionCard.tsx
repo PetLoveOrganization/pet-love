@@ -1,7 +1,7 @@
-import React from 'react'
 import { AnchorButton } from '../AnchorButton'
-import { Level } from '@/types.d'
+import { Level, type Pet } from '@/types.d'
 import { ArrowRight } from '@/icons/ArrowRight'
+import { Clock } from '@/icons/Clock'
 
 interface PetCharacteristicProps {
   label: string
@@ -36,23 +36,18 @@ const CharacteristicBar = ({ label, level }: PetCharacteristicProps) => {
 }
 
 interface PetAdoptionCardProps {
-  adoptionFee: number
+  pet: Pet
   currency?: string
-  energyLevel: Level
-  affectionLevel: Level
-  exerciseNeeds: Level
   adoptionLink: string
 }
 
 export const PetAdoptionCard = ({
-  adoptionFee,
-  currency = '',
-  energyLevel,
-  affectionLevel,
-  exerciseNeeds,
+  pet,
+  currency = 'USD',
   adoptionLink,
 }: PetAdoptionCardProps) => {
-  const fee = adoptionFee > 0 ? `$${adoptionFee.toLocaleString()} ${currency}` : 'Free'
+  const { recovery_fee, energy_level, affection_level, exercise_needs, user_context } = pet
+  const fee = recovery_fee > 0 ? `$${recovery_fee.toLocaleString()} ${currency}` : 'Free'
   return (
     <div className="bg-white rounded-3xl shadow-xl p-8 border-t-8 border-green-pet w-full">
       <div className="text-center mb-6">
@@ -64,14 +59,33 @@ export const PetAdoptionCard = ({
         </div>
       </div>
       <div className="mb-10">
-        <AnchorButton
-          href={adoptionLink}
-          hasShadow
-          className="w-full py-4 text-base lg:text-lg flex justify-center gap-2 group"
-        >
+        {
+          !user_context && (
+            <AnchorButton
+              href={adoptionLink}
+              hasShadow
+              className="w-full py-4 text-base lg:text-lg flex justify-center gap-2 group"
+            >
           Request Adoption
-          <ArrowRight className="size-6 group-hover:translate-x-1 transition-transform" />
-        </AnchorButton>
+              <ArrowRight className="size-6 group-hover:translate-x-1 transition-transform" />
+            </AnchorButton>
+          )
+        }
+        {
+          user_context && (
+            <AnchorButton
+              href={adoptionLink}
+              hasShadow
+              variant='secondary'
+              disabled
+              className="w-full py-4 text-base lg:text-lg flex justify-center gap-2 group"
+            >
+              <Clock className="size-6 group-hover:translate-x-1 transition-transform" />
+              Application Under Review
+            </AnchorButton>
+          )
+        }
+
       </div>
 
       <hr className="border-slate-100 mb-8" />
@@ -80,17 +94,17 @@ export const PetAdoptionCard = ({
 
         <CharacteristicBar
           label="Energy Level"
-          level={energyLevel}
+          level={energy_level}
         />
 
         <CharacteristicBar
           label="Affection"
-          level={affectionLevel}
+          level={affection_level}
         />
 
         <CharacteristicBar
           label="Exercise Needs"
-          level={exerciseNeeds}
+          level={exercise_needs}
         />
       </div>
     </div>

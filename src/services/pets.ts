@@ -15,5 +15,7 @@ export const getAllPets = ({ filters, actions, offset, limit }: { filters: Filte
 }
 
 export const getPetById = (id: string): Promise<Pet> => {
-  return apiFetch<Pet>(`/pets/${id}`)
+  return apiFetch<Pet>(`/pets/${id}`, {
+    credentials: 'include',
+  })
 }

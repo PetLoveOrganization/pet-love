@@ -11,7 +11,7 @@ import { useOutletContext } from 'react-router'
 
 export default function PetDetails () {
   const { pet } = useOutletContext<{ pet: Pet }>()
-  const { id,images, description, owner, requirements,recovery_fee,energy_level,affection_level,exercise_needs } = pet
+  const { id,images, description, owner, requirements } = pet
 
   return (
     <>
@@ -34,10 +34,7 @@ export default function PetDetails () {
         </div>
         <div className='min-w-full md:min-w-lg lg:min-w-auto'>
           <PetAdoptionCard
-            adoptionFee={recovery_fee}
-            energyLevel={energy_level}
-            affectionLevel={affection_level}
-            exerciseNeeds={exercise_needs}
+            pet={pet}
             adoptionLink={`/pets/${id}/adopt`}
           />
         </div>

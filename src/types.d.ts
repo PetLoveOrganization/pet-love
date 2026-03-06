@@ -112,7 +112,13 @@ export interface Pet {
   owner?: User;
   requirements: Requirement[];
   recovery_fee: number;
+  user_context?: UserContext
+}
 
+export interface UserContext {
+  has_applied: boolean;
+  application_status: string;
+  applied_at: string;
 }
 
 export interface Requirement {

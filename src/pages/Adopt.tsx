@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useAuthStore } from '@/store/auth'
 import { createAdoptionRequest } from '@/services/adoptation'
 import { toast } from 'sonner'
+import { useEffect } from 'react'
 
 const housingOptions = {
   house: { value: 'house', label: 'House' , icon: Home },
@@ -32,6 +33,12 @@ export default function AdoptForm () {
     resolver: zodResolver(adoptionSchema),
     defaultValues: { housing: 'house' },
   })
+
+  useEffect(() => {
+    if(pet.user_context) {
+      navigate(`/pets/${pet.id}`, { replace: true })
+    }
+  }, [pet, navigate])
 
   const onSubmit = async (data: AdoptionFormData) => {
     const { id } = pet
@@ -65,7 +72,7 @@ export default function AdoptForm () {
   }
 
   const textButton = isSubmitting ? 'Requesting...' : 'Request Adoption'
-
+  if (pet.user_context?.has_applied) return null
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <main className='mt-4 md:mt-8 max-w-7xl mx-auto flex gap-8 flex-col lg:flex-row  items-center lg:items-start '>
