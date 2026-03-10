@@ -11,7 +11,7 @@ function LoginImage () {
     <div className="hidden md:block md:w-1/2 relative">
       <img
         src="/login.webp"
-        alt="Adopción"
+        alt="Adoption"
         className="absolute inset-0 w-full h-full object-cover"
       />
       <div className="absolute bottom-10 left-10 right-10 bg-white/20 backdrop-blur-md p-6 rounded-2xl border border-white/30 text-white">

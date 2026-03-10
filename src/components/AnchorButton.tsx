@@ -25,7 +25,7 @@ export function AnchorButton ({
 
   const variants = {
     primary: cn(
-      'bg-green-pet text-white hover:bg-orange-300',
+      'bg-green-pet text-white hover:bg-orange-300 text-back',
       hasShadow && 'shadow-lg shadow-green-pet/40 hover:shadow-orange-300/40',
     ),
     secondary: 'bg-white border py-3 border-gray-400/20 text-sm',
@@ -64,11 +64,11 @@ export function AnchorButton ({
       </a>
     )
   }
-  const { isHasLink, ...restProps } = commonProps
+
   return (
     <NavLink
       to={disabled ? '#' : href}
-      {...restProps}
+      {...commonProps}
     >
       {children}
     </NavLink>

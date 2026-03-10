@@ -19,3 +19,10 @@ export const getPetById = (id: string): Promise<Pet> => {
     credentials: 'include',
   })
 }
+
+export const togglePetFavorite = (id: string): Promise<void> => {
+  return apiFetch<void>(`/pets/${id}/favorite`, {
+    method: 'POST',
+    credentials: 'include',
+  })
+}

@@ -34,7 +34,7 @@ export const PetItem = ({ pet: { id, name, age, age_unit, gender, breed, images,
           group-hover:scale-100 transition-all duration-300'
         />
         <PetTag isNew={index === 0} isUrgent={is_urgent} isVaccinated={is_vaccinated} className='absolute bottom-3 left-3'/>
-        <FavoriteButton isFavorite={true} className='absolute top-3 right-3'/>
+        <FavoriteButton petId={id} className='absolute top-3 right-3'/>
       </picture>
       <div className='px-5 py-4 flex flex-col items-stretch gap-3'>
         <h3 className='flex items-center justify-between font-bold text-2xl text-pretty leading-none'>{name}

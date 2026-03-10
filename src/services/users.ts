@@ -31,3 +31,8 @@ export const getUser = (): Promise<User> => {
   })
 }
 
+export const getFavoriteIds = (): Promise<{favoriteIds: string[]}> => {
+  return apiFetch<{favoriteIds: string[]}>('/account/favorites/ids', {
+    credentials: 'include',
+  })
+}

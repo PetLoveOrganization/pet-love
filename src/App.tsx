@@ -17,12 +17,26 @@ import { useEffect } from 'react'
 import { RegisterPage } from './pages/Register'
 import AdoptForm from './pages/Adopt'
 import PetDetails from './pages/PetDetails'
+import { useFavoriteStore } from './store/favorites'
+import { getFavoriteIds } from './services/users'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
+  const user = useAuthStore((state) => state.user)
+  const setFavorite = useFavoriteStore( state => state.setFavorite)
 
   useEffect(() => {
     checkAuth()
-  }, [checkAuth])
+  }, [])
+
+  useEffect(() => {
+    if(user) {
+      getFavoriteIds()
+        .then((data) => {
+          const { favoriteIds } = data
+          setFavorite(favoriteIds)
+        })
+    }
+  }, [user, setFavorite])
   return (
     <div className='text-[#0d1b0d] flex flex-col min-h-screen grow'>
       <Header />

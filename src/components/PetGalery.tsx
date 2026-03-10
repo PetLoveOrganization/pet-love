@@ -87,7 +87,7 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
                 : 'opacity-50 hover:opacity-100 hover:scale-105'
             }`}
           >
-            <img src={image_url} className="w-full h-full object-cover" alt={`Miniatura ${index}`} loading="lazy" />
+            <img src={image_url} className="w-full h-full object-cover" alt={`Miniature ${index}`} loading="lazy" />
           </button>
         ))}
       </div>
@@ -120,7 +120,7 @@ export const PetGallery: React.FC<PetGalleryProps> = ({ images }) => {
               <Zoom>
                 <img
                   src={image_url}
-                  alt="Mascota en detalle"
+                  alt="Pet detail"
                   className="max-w-full max-h-[85vh] object-contain rounded-lg shadow-2xl"
                 />
               </Zoom>

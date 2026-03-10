@@ -6,6 +6,7 @@ import { Link } from 'react-router'
 import { PetLeg } from '@/icons/PetLeg'
 import { ChevronDown } from '@/icons/ChevronDown'
 import { HeartFilled as HeartIcon } from '@/icons/HeartFilled'
+import { useFavoriteStore } from '@/store/favorites'
 
 export function ProfileButton () {
   const [isOpen, setIsOpen] = useState(false)
@@ -13,6 +14,7 @@ export function ProfileButton () {
 
   const user = useAuthStore((state) => state.user)
   const logout = useAuthStore((state) => state.logout)
+  const setFavorite = useFavoriteStore(state => state.setFavorite)
 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
@@ -23,6 +25,11 @@ export function ProfileButton () {
     document.addEventListener('mousedown', handleClickOutside)
     return () => document.removeEventListener('mousedown', handleClickOutside)
   }, [])
+
+  const handleLogout = () => {
+    logout()
+    setFavorite([])
+  }
 
   return (
     <div className="relative" ref={dropdownRef}>
@@ -80,7 +87,7 @@ export function ProfileButton () {
 
             <li className="border-t border-lime-700/10 mt-2 pt-2">
               <button
-                onClick={() => logout()}
+                onClick={handleLogout}
                 className="flex items-center w-full p-2 text-red-600 hover:bg-gray-700 rounded-md transition-colors"
               >
                 <SignOut className="w-5 h-5 me-2" />
