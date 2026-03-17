@@ -3,6 +3,38 @@ declare global {
     toSorted (comparator?: (a: T, b: T) => number): T[]
   }
 }
+
+export const initPetsResponse = <T>{
+  data: <T>[],
+  total: 0,
+  offset: 0,
+  limit: 0,
+}
+export enum AdoptionRequestStatus {
+  PENDING = 'pending',
+  APPROVED = 'approved',
+  REJECTED = 'rejected',
+}
+
+export interface AdoptionRequestParams {
+  offset?: number
+  limit?: number
+  status?: AdoptionRequestStatus
+}
+
+export interface AdoptionRequests {
+  data: AdoptionRequest[]
+  total: number
+  offset: number
+  limit: number
+}
+
+export interface AdoptionRequest {
+  id: string
+  status: AdoptionRequestStatus
+  created_at: string
+  pet: Pet
+}
 type LoginParams = {
   email: string
   password: string
@@ -129,7 +161,7 @@ export interface PetAdopterProfile {
 }
 
 export interface PetAdoptionApplication {
-  status: string
+  status: AdoptionRequestStatus
   at: string
 }
 

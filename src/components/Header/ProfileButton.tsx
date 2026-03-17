@@ -2,7 +2,7 @@ import { useAuthStore } from '@/store/auth'
 import { useState, useRef, useEffect } from 'react'
 import { User as UserIcon } from '@/icons/user'
 import { SignOut } from '@/icons/SignOut'
-import { Link } from 'react-router'
+import { Link, NavLink } from 'react-router'
 import { PetLeg } from '@/icons/PetLeg'
 import { ChevronDown } from '@/icons/ChevronDown'
 import { HeartFilled as HeartIcon } from '@/icons/HeartFilled'
@@ -37,11 +37,12 @@ export function ProfileButton () {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 focus:outline-none"
         type="button"
-      >
-        <div className='flex flex-col text-right'>
-          <p className='text-sm text-gray-500'>Hello, </p>
-          <p className='text-md font-semibold'>{user?.name.split(' ')[0]}</p>
-        </div>
+      > <NavLink to='/profile'>
+          <div className='flex flex-col text-right'>
+            <p className='text-sm text-gray-500'>Hello, </p>
+            <p className='text-md font-semibold'>{user?.name.split(' ')[0]}</p>
+          </div>
+        </NavLink>
         <ChevronDown className={`w-5 h-5 transition-all  duration-300 ${isOpen ? 'rotate-180 text-lime-400'  : 'text-gray-500'}`}/>
         {/* <img
           className="w-10 h-10 rounded-full border-2 border-transparent hover:border-brand-medium transition-all"
@@ -69,7 +70,7 @@ export function ProfileButton () {
             <li>
               <Link to="/profile" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
                 <UserIcon className="w-5 h-5 me-2" />
-                Account
+                Profile
               </Link>
             </li>
             <li>

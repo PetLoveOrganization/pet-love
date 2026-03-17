@@ -60,7 +60,7 @@ export const PetAdoptionCard = ({
       </div>
       <div className="mb-10">
         {
-          !user_context.application && (
+          !user_context?.application && (
             <AnchorButton
               href={adoptionLink}
               hasShadow
@@ -72,7 +72,7 @@ export const PetAdoptionCard = ({
           )
         }
         {
-          user_context.application && (
+          user_context?.application && (
             <AnchorButton
               href={adoptionLink}
               hasShadow

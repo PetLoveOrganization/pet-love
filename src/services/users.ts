@@ -1,5 +1,5 @@
 import { apiFetch } from '@/api/client'
-import type { LoginParams, AuthResponse, RegisterParams, User } from '@/types'
+import type { LoginParams, AuthResponse, RegisterParams, User, AdoptionRequestParams, PetsResponse, AdoptionRequests } from '@/types'
 
 export const login = ({ email, password }: LoginParams): Promise<AuthResponse> => {
   return apiFetch<AuthResponse>('/auth/login', {
@@ -33,6 +33,25 @@ export const getUser = (): Promise<User> => {
 
 export const getFavoriteIds = (): Promise<{favoriteIds: string[]}> => {
   return apiFetch<{favoriteIds: string[]}>('/account/favorites/ids', {
+    credentials: 'include',
+  })
+}
+
+export const getAdoptionRequests = ({ offset, limit, status }: AdoptionRequestParams): Promise<AdoptionRequests> => {
+  const params = new URLSearchParams()
+  if (offset) params.append('offset', offset.toString())
+  if (limit) params.append('limit', limit.toString())
+  if (status) params.append('status', status)
+  return apiFetch<AdoptionRequests>('/account/adoption-requests?' + params.toString(), {
+    credentials: 'include',
+  })
+}
+
+export const getFavorites = ({ offset, limit }: { offset: number, limit: number }): Promise<PetsResponse> => {
+  const params = new URLSearchParams()
+  if (offset) params.append('offset', offset.toString())
+  if (limit) params.append('limit', limit.toString())
+  return apiFetch<PetsResponse>('/account/favorites?' + params.toString(), {
     credentials: 'include',
   })
 }
