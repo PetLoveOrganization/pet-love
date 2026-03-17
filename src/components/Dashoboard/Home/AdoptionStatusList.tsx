@@ -15,8 +15,8 @@ export const AdoptionStatusList = ({ requests }: Props) => {
     <div className="flex flex-col gap-4">
       <section className="">
         <div className="flex justify-between items-center mb-4">
-          <h2 className="text-2xl font-bold">Adoption Status</h2>
-          {seeAll && <Link to='/account/adoption-requests' className="text-green-pet font-semibold hover:text-green-pet/80">See all</Link>}
+          <h2 className="text-xl md:text-2xl font-bold">Adoption Status</h2>
+          {seeAll && <Link to='/account/adoption-requests' className="text-green-pet font-semibold text-sm md:text-base hover:text-green-pet/80">See all</Link>}
         </div>
 
         <div className="bg-white rounded-xl shadow-xs overflow-hidden">

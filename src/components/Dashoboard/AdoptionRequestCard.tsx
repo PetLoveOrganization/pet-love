@@ -18,8 +18,8 @@ export const AdoptionRequestCard = ({
   const { name, images, breed, id } = pet
   const date = formatDate(created_at)
   return (
-    <div className="flex items-center justify-between p-4 bg-white border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors">
-      <div className="flex gap-4 items-center">
+    <div className="flex flex-col md:flex-row items-center justify-between p-4 bg-white border-b border-gray-100 last:border-0 hover:bg-gray-50 transition-colors gap-4">
+      <div className="flex-1 flex gap-4 items-center">
         <img
           src={images[0].image_url}
           alt={name}
@@ -33,7 +33,7 @@ export const AdoptionRequestCard = ({
           <p className='text-gray-500 text-xs'>Solicited on {date}</p>
         </div>
       </div>
-      <div className="flex flex-col items-end gap-3">
+      <div className="flex flex-row md:flex-col gap-3 items-center justify-between">
         <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${config.color}`}>
           <span className={`w-2 h-2 rounded-full ${config.dot}`} />
           {status.charAt(0).toUpperCase() + status.slice(1)}
@@ -41,7 +41,7 @@ export const AdoptionRequestCard = ({
 
         <Link
           to={`/pets/${id}`}
-          className="text-[#1a2e1a] font-bold text-lg hover:underline transition-all"
+          className="text-gray-600 font-semibold hover:underline transition-all"
         >
           See details
         </Link>

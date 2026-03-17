@@ -14,7 +14,7 @@ interface StatCardProps {
 
 const StatCard = ({ icon: Icon, title, value, badgeText, iconColorClass = 'text-blue-600', iconBgClass = 'bg-blue-50' }: StatCardProps) => {
   return (
-    <div className="bg-white p-6 rounded-2xl shadow-xs flex flex-col gap-4">
+    <div className="bg-white p-4 md:p-6 rounded-2xl shadow-xs flex flex-col gap-4">
       <div className="flex justify-between items-start">
         <div className={`p-3 rounded-xl ${iconBgClass}`}>
           <Icon className={`w-6 h-6 ${iconColorClass}`} />
@@ -67,7 +67,7 @@ export const DashboardStats = ({ totalAdoptionRequests }: Props) => {
   ]
 
   return (
-    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {stats.map((stat, index) => (
         <StatCard key={index} {...stat} />
       ))}

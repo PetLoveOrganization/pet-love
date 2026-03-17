@@ -18,8 +18,8 @@ export const FavoritePetCard = ({ pet }: FavoritePetCardProps) => {
         <FavoriteButton petId={id} className='absolute top-3 right-3'/>
       </picture>
       <div className="p-2 md:p-4 flex flex-col gap-0.5">
-        <h3 className="text-xl font-bold text-gray-800 tracking-tight">{name}</h3>
-        <p className="text-gray-400 text-sm">
+        <h3 className="text-base md:text-xl font-bold text-gray-800 tracking-tight">{name}</h3>
+        <p className="text-gray-400 text-xs md:text-sm">
           {age} {age_unit }
         </p>
       </div>

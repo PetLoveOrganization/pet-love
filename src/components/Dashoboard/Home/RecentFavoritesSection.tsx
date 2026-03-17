@@ -14,7 +14,7 @@ export const RecentFavoritesSection = ({ pets }: RecentFavoritesSectionProps) =>
   return (
     <section className="flex flex-col gap-4 ">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold">Recent Favorites</h2>
+        <h2 className="text-xl md:text-2xl font-bold">Recent Favorites</h2>
         <Link to='/account/favorites' className="text-gray-400 hover:text-gray-600 transition-colors">
           <ArrowRight className='size-6 text-gray-500 ' />
         </Link>
