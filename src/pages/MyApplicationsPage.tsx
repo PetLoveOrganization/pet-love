@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
 import { getAdoptionRequests } from '@/services/users'
 import { type AdoptionRequest } from '@/types.d'
-import { AdoptionProcessCard } from '@/components/Dashoboard/AdoptionProcessCard'
+import { AdoptionProcessCard } from '@/components/Dashboard/AdoptionProcessCard'
+import { DashboardTitle } from '@/components/Dashboard/DashboardTitle'
 
 export default function MyApplicationsPage () {
   const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequest[]>([])
@@ -13,15 +14,16 @@ export default function MyApplicationsPage () {
   }, [])
   return (
     <>
-      <header>
-        <h1 className='text-3xl font-bold'>My Applications</h1>
-        <p className='text-gray-500 mt-1 font-light'>Manage and track the status of your current pet adoption request.</p>
-      </header>
+      <DashboardTitle title='My Applications' description='Manage and track the status of your current pet adoption request.' />
 
       <section className='flex flex-col gap-4 mt-6'>
-        {adoptionRequests.map((adoptionRequest) => (
-          <AdoptionProcessCard key={adoptionRequest.id} adoptionRequest={adoptionRequest} />
-        ))}
+        {adoptionRequests.length === 0 ? (
+          <p className='text-gray-500 mt-1 font-light'>No applications found</p>
+        ) : (
+          adoptionRequests.map((adoptionRequest) => (
+            <AdoptionProcessCard key={adoptionRequest.id} adoptionRequest={adoptionRequest} />
+          ))
+        )}
       </section>
     </>
   )

@@ -1,6 +1,6 @@
 import { Outlet } from 'react-router'
 import { Sidebar } from '../Sidebar'
-import { TopBar } from '../Dashoboard/TopBar'
+import { TopBar } from '../Dashboard/TopBar'
 import { useState } from 'react'
 
 export const DashboardLayout = () => {
