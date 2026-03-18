@@ -4,12 +4,12 @@ import { DashboardStats } from '@/components/Dashoboard/Home/Stats'
 import { Loading } from '@/components/Loading'
 import { getAdoptionRequests, getFavorites } from '@/services/users'
 import { useAuthStore } from '@/store/auth'
-import { AdoptionRequestStatus, initPetsResponse, type AdoptionRequest, type AdoptionRequests, type PetsResponse } from '@/types.d'
+import { AdoptionRequestStatus, initPetsResponse, type AdoptionRequest, type AdoptionRequestsResponse, type PetsResponse } from '@/types.d'
 import { useEffect, useState } from 'react'
 import { toast } from 'sonner'
 
 export default function ProfilePage () {
-  const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequests>(initPetsResponse<AdoptionRequest>)
+  const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequestsResponse>(initPetsResponse<AdoptionRequest>)
   const [favorites, setFavorites] = useState<PetsResponse>(initPetsResponse)
   const [loading, setLoading] = useState(true)
 

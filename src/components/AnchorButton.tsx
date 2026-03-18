@@ -6,7 +6,7 @@ type Props = AnchorHTMLAttributes<HTMLAnchorElement> & {
   href: string
   hasShadow?: boolean
   isExternal?: boolean
-  variant?: 'primary' | 'secondary' | 'outline'
+  variant?: 'primary' | 'secondary' | 'outline' | 'black'
   disabled?: boolean
 }
 
@@ -30,6 +30,7 @@ export function AnchorButton ({
     ),
     secondary: 'bg-white border py-3 border-gray-400/20 text-sm',
     outline: 'bg-white border py-2 md:py-3 border-green-pet/20 text-green-pet hover:bg-green-pet/10 bg-transparent text-sm md:text-base',
+    black: 'bg-black rounded-xl text-white font-extrabold  transition-all duration-200 cursor-pointer hover:outline-2 hover:outline-black hover:outline-offset-2 hover:bg-slate-300 focus:outline-2 focus:outline-black focus:outline-offset-2 active:scale-80',
   }
 
   const disabledStyles = 'opacity-50 cursor-not-allowed pointer-events-none bg-gray-200 text-gray-400 shadow-none scale-100'

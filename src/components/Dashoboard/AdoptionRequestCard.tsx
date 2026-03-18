@@ -1,20 +1,15 @@
-import { AdoptionRequestStatus, type AdoptionRequest } from '@/types.d'
+import { type AdoptionRequest } from '@/types.d'
 import { formatDate } from '@/utils/utils'
 import { Link } from 'react-router'
+import { StatusChip } from '@/components/chips/StatusChip'
 
 interface AdoptionRequestProps {
   adoptionRequest: AdoptionRequest
-}
-const STATUS_CONFIG = {
-  [AdoptionRequestStatus.PENDING]: { color: 'bg-amber-100 text-amber-700', dot: 'bg-amber-500' },
-  [AdoptionRequestStatus.APPROVED]: { color: 'bg-emerald-100 text-emerald-700', dot: 'bg-emerald-500' },
-  [AdoptionRequestStatus.REJECTED]: { color: 'bg-red-100 text-red-700', dot: 'bg-red-500' },
 }
 
 export const AdoptionRequestCard = ({
   adoptionRequest: { pet, status, created_at },
 }: AdoptionRequestProps) => {
-  const config = STATUS_CONFIG[status]
   const { name, images, breed, id } = pet
   const date = formatDate(created_at)
   return (
@@ -34,10 +29,7 @@ export const AdoptionRequestCard = ({
         </div>
       </div>
       <div className="flex flex-row md:flex-col gap-3 items-center justify-between">
-        <div className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm font-semibold ${config.color}`}>
-          <span className={`w-2 h-2 rounded-full ${config.dot}`} />
-          {status.charAt(0).toUpperCase() + status.slice(1)}
-        </div>
+        <StatusChip status={status} />
 
         <Link
           to={`/pets/${id}`}

@@ -23,7 +23,7 @@ const MENU_ITEMS: MenuItem[] = [
   },
   {
     icon: FolderOpen,
-    label: 'Requests',
+    label: 'My Applications',
     path: '/profile/requests',
   },
   {

@@ -22,7 +22,7 @@ export interface AdoptionRequestParams {
   status?: AdoptionRequestStatus
 }
 
-export interface AdoptionRequests {
+export interface AdoptionRequestsResponse {
   data: AdoptionRequest[]
   total: number
   offset: number

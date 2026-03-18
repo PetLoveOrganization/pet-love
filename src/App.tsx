@@ -18,6 +18,7 @@ import { useFavoriteStore } from './store/favorites'
 import { getFavoriteIds } from './services/users'
 import { AdoptLayout } from './components/Layouts/AdoptLayout'
 import { DashboardLayout } from './components/Layouts/DashboardLayout'
+import MyApplicationsPage from './pages/MyApplicationsPage'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
   const user = useAuthStore((state) => state.user)
@@ -56,7 +57,10 @@ function App () {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
-            <Route path='profile' element={<ProfilePage />} />
+            <Route path='profile' >
+              <Route index element={<ProfilePage />} />
+              <Route path='requests' element={<MyApplicationsPage />} />
+            </Route>
           </Route>
         </Route>
         <Route path='*' element={<NotFoundPage />}/>
