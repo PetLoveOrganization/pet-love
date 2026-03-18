@@ -21,15 +21,15 @@ export const AdoptionProcessCard = ({ adoptionRequest }: Props) => {
     <div className={`bg-white p-4 lg:p-6 rounded-xl shadow-xs border ${
       hasBorder ? `border-l-4 border-l-${isApproved ? 'green-pet' : 'red-400'} border-gray-100` : 'border-gray-100'
     } hover:shadow-md transition-all`}>
-      <div className="flex flex-col md:flex-row gap-2 md:gap-6 md:items-stretch">
+      <div className="flex flex-col md:flex-row gap-4 lg:gap-6 md:items-stretch">
         <img
           src={pet.images[0]?.image_url}
           alt={pet.name}
           className="md:size-48 aspect-square rounded-xl object-cover shadow-inner shrink-0"
         />
-        <div className="flex-1 flex flex-col gap-4">
+        <div className="flex-1 flex flex-col gap-2">
           <div className="flex flex-col lg:flex-row justify-between items-stretch gap-2 lg:gap-4">
-            <div className="flex flex-col gap-1 items-stretch">
+            <div className="flex flex-col gap-2 items-stretch">
               <div className='flex flex-row-reverse lg:flex-col justify-between items-start gap-2'>
                 <StatusChip status={status} size='xs' withDot={false} />
                 <h3 className="text-lg lg:text-2xl font-bold text-gray-800 tracking-tight">{pet.name}</h3>
@@ -43,7 +43,7 @@ export const AdoptionProcessCard = ({ adoptionRequest }: Props) => {
               <span className="text-gray-900 font-semibold text-sm">{formattedDate}</span>
             </div>
           </div>
-          <div className="mt-auto space-y-2 ">
+          <div className=" space-y-2 ">
             <div className="flex justify-between items-center text-xs gap-2">
               <p className=" font-bold text-gray-700 uppercase tracking-wide">
                 Current Step: {currentStep}
@@ -61,7 +61,7 @@ export const AdoptionProcessCard = ({ adoptionRequest }: Props) => {
               />
             </div>
           </div>
-          <div className="md:flex md:justify-end">
+          <div className="md:flex md:justify-end mt-auto">
             <AnchorButton
               href={`/pets/${pet.id}`}
               className='flex gap-2'
