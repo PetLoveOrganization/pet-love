@@ -8,11 +8,12 @@ import { housingInformationSchema, type HousingInformationFormData } from '@/sch
 import { getAdopterProfile, updateAdopterProfile } from '@/services/users'
 import { useAuthStore } from '@/store/auth'
 import { zodResolver } from '@hookform/resolvers/zod/src/zod.js'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function ProfilePage () {
+  const [canEdit, setCanEdit] = useState(false)
   const user = useAuthStore((state) => state.user)
   const { name: userName, email } = user!
 
@@ -34,7 +35,10 @@ export default function ProfilePage () {
 
   useEffect(() => {
     getAdopterProfile().then((profile) => {
+      setCanEdit(true)
       reset(profile)
+    }).catch(() => {
+      setCanEdit(false)
     })
   }, [])
 
@@ -56,46 +60,48 @@ export default function ProfilePage () {
           </FormField>
         </div>
       </section>
-      <form onSubmit={handleSubmit(onSubmit)} className='bg-white rounded-xl p-6 shadow-xs mt-6 flex flex-col gap-6'>
-        <h2 className='text-xl font-semibold'>
+      {canEdit && (
+        <form onSubmit={handleSubmit(onSubmit)} className='bg-white rounded-xl p-6 shadow-xs mt-6 flex flex-col gap-6'>
+          <h2 className='text-xl font-semibold'>
           Housing Information
-        </h2>
-        <div className='flex flex-col md:flex-row gap-6'>
-          <FormField title='Phone' id='phone_number' error={phone_number?.message}>
-            <InputText {...register('phone_number')} id='phone_number' placeholder='e.g. +123456789' hasBorder={true} className='placeholder:text-gray-500'/>
-          </FormField>
-          <FormField title='Address' id='address' error={address?.message}>
-            <InputText {...register('address')} id='address' placeholder='e.g. 123 Main St' hasBorder={true} className='placeholder:text-gray-500'/>
-          </FormField>
+          </h2>
+          <div className='flex flex-col md:flex-row gap-6'>
+            <FormField title='Phone' id='phone_number' error={phone_number?.message}>
+              <InputText {...register('phone_number')} id='phone_number' placeholder='e.g. +123456789' hasBorder={true} className='placeholder:text-gray-500'/>
+            </FormField>
+            <FormField title='Address' id='address' error={address?.message}>
+              <InputText {...register('address')} id='address' placeholder='e.g. 123 Main St' hasBorder={true} className='placeholder:text-gray-500'/>
+            </FormField>
 
-        </div>
-        <FormField title="Type of housing" >
-          <Controller
-            name='housing'
-            control={control}
-            render={({ field }) => (
-              <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                {Object.values(HOUSING_OPTIONS).map((option) => (
-                  <OptionButton
-                    key={option.value}
-                    icon={option.icon}
-                    label={option.label}
-                    isSelected={field.value === option.value}
-                    onClick={() => field.onChange(option.value)}
-                  />
-                ))}
-              </div>
-            )}
-          />
-        </FormField>
-        <div className='flex flex-col gap-2'>
-          <FormField title="Is there any other pets in your home?" id="other_pets" error={other_pets?.message}>
-            <InputText {...register('other_pets')} id='other_pets' placeholder='e.g. Yes, I have a dog and a cat' hasBorder={true} className='placeholder:text-gray-500'/>
+          </div>
+          <FormField title="Type of housing" >
+            <Controller
+              name='housing'
+              control={control}
+              render={({ field }) => (
+                <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                  {Object.values(HOUSING_OPTIONS).map((option) => (
+                    <OptionButton
+                      key={option.value}
+                      icon={option.icon}
+                      label={option.label}
+                      isSelected={field.value === option.value}
+                      onClick={() => field.onChange(option.value)}
+                    />
+                  ))}
+                </div>
+              )}
+            />
           </FormField>
-          <p className='text-sm text-lime-700/70'>If you don't have another pets, you can leave this field empty</p>
-        </div>
-        <GreenButton type='submit' disabled={isSubmitting} className='md:self-end px-6'>{textButton}</GreenButton>
-      </form>
+          <div className='flex flex-col gap-2'>
+            <FormField title="Is there any other pets in your home?" id="other_pets" error={other_pets?.message}>
+              <InputText {...register('other_pets')} id='other_pets' placeholder='e.g. Yes, I have a dog and a cat' hasBorder={true} className='placeholder:text-gray-500'/>
+            </FormField>
+            <p className='text-sm text-lime-700/70'>If you don't have another pets, you can leave this field empty</p>
+          </div>
+          <GreenButton type='submit' disabled={isSubmitting} className='md:self-end px-6'>{textButton}</GreenButton>
+        </form>
+      )}
     </>
   )
 }
