@@ -5,7 +5,7 @@ import HomePage from '@/pages/Home'
 import PetsPage from '@/pages/Pets'
 import NotFoundPage from '@/pages/404'
 import LoginPage from '@/pages/Login'
-import ProfilePage from '@/pages/Profile'
+import AccountPage from '@/pages/Account'
 import DetailsPage from '@/pages/Details'
 
 import { ProtectedRoute } from '@/components/Auth/ProtectedRoute'
@@ -20,6 +20,7 @@ import { AdoptLayout } from './components/Layouts/AdoptLayout'
 import { DashboardLayout } from './components/Layouts/DashboardLayout'
 import MyApplicationsPage from './pages/MyApplicationsPage'
 import { FavoritesPage } from './pages/Favorites'
+import ProfilePage from './pages/Profile'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
   const user = useAuthStore((state) => state.user)
@@ -58,10 +59,11 @@ function App () {
 
         <Route element={<ProtectedRoute />}>
           <Route element={<DashboardLayout />}>
-            <Route path='profile' >
-              <Route index element={<ProfilePage />} />
+            <Route path='account' >
+              <Route index element={<AccountPage />} />
               <Route path='requests' element={<MyApplicationsPage />} />
               <Route path='favorites' element={<FavoritesPage />} />
+              <Route path='profile' element={<ProfilePage />} />
             </Route>
           </Route>
         </Route>

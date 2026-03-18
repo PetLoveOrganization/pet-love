@@ -2,13 +2,11 @@ import { FormField } from '@/components/FormField'
 import { GreenButton } from '@/components/GreenButton'
 import { InputText } from '@/components/InputText'
 import { InputTextArea } from '@/components/InputTextArea'
-import { Building } from '@/icons/Building'
 import { CircleCheck } from '@/icons/CircleCheck'
-import { Home } from '@/icons/Home'
-import { Plant } from '@/icons/Plant'
 import { Point } from '@/icons/point'
 import { Send } from '@/icons/Send'
 import { User } from '@/icons/user'
+import { OptionButton } from '@/components/chips/OptionButton'
 import { adoptionSchema, type AdoptionFormData } from '@/schemas/adoptionSchema'
 import type { Pet } from '@/types'
 import { useForm, Controller } from 'react-hook-form'
@@ -18,12 +16,8 @@ import { useAuthStore } from '@/store/auth'
 import { createAdoptionRequest } from '@/services/adoptions'
 import { toast } from 'sonner'
 import { useEffect } from 'react'
-
-const housingOptions = {
-  house: { value: 'house', label: 'House' , icon: Home },
-  apartment: { value: 'apartment', label: 'Apartment' , icon: Building },
-  patio: { value: 'patio', label: 'House with patio' , icon: Plant },
-}
+import { HOUSING_OPTIONS } from '@/constants'
+import { Home } from '@/icons/Home'
 
 export default function AdoptForm () {
   const navigate = useNavigate()
@@ -123,11 +117,14 @@ export default function AdoptForm () {
                   control={control}
                   render={({ field }) => (
                     <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
-                      {Object.values(housingOptions).map((option) => (
-                        <button type='button' onClick={() => field.onChange(option.value)} key={option.value} className={`flex flex-col items-center gap-2 cursor-pointer border-2 border-gray-100 rounded-xl p-4 hover:border-green-pet transition-colors ${field.value === option.value ? 'border-green-pet bg-green-pet/5' : ''}`}>
-                          <option.icon className='size-4 text-lime-700'/>
-                          <span className='text-sm font-semibold text-gray-700'>{option.label}</span>
-                        </button>
+                      {Object.values(HOUSING_OPTIONS).map((option) => (
+                        <OptionButton
+                          key={option.value}
+                          icon={option.icon}
+                          label={option.label}
+                          isSelected={field.value === option.value}
+                          onClick={() => field.onChange(option.value)}
+                        />
                       ))}
                     </div>
                   )}

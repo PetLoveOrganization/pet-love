@@ -37,7 +37,7 @@ export function ProfileButton () {
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 focus:outline-none"
         type="button"
-      > <NavLink to='/profile'>
+      > <NavLink to='/account'>
           <div className='flex flex-col text-right'>
             <p className='text-sm text-gray-500'>Hello, </p>
             <p className='text-md font-semibold'>{user?.name.split(' ')[0]}</p>
@@ -68,19 +68,19 @@ export function ProfileButton () {
 
           <ul className="px-2 pb-2 text-md text-gray-500 font-medium">
             <li>
-              <Link to="/profile" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
+              <Link to="/account" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
                 <UserIcon className="w-5 h-5 me-2" />
                 Profile
               </Link>
             </li>
             <li>
-              <Link to="/profile" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
+              <Link to="/account/requests" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
                 <PetLeg className="w-5 h-5 me-2" />
                 Adoptions
               </Link>
             </li>
             <li>
-              <Link to="/profile" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
+              <Link to="/account/favorites" className="flex items-center p-2 hover:bg-gray-700 hover:text-white rounded-md transition-colors">
                 <HeartIcon className="w-5 h-5 me-2" />
                 Favorites
               </Link>

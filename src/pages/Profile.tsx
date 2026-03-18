@@ -1,57 +1,101 @@
-import { AdoptionStatusList } from '@/components/Dashboard/Home/AdoptionStatusList'
-import { RecentFavoritesSection } from '@/components/Dashboard/Home/RecentFavoritesSection'
-import { DashboardStats } from '@/components/Dashboard/Home/Stats'
-import { Loading } from '@/components/Loading'
-import { getAdoptionRequests, getFavorites } from '@/services/users'
+import { OptionButton } from '@/components/chips/OptionButton'
+import { DashboardTitle } from '@/components/Dashboard/DashboardTitle'
+import { FormField } from '@/components/FormField'
+import { GreenButton } from '@/components/GreenButton'
+import { InputText } from '@/components/InputText'
+import { HOUSING_OPTIONS } from '@/constants'
+import { housingInformationSchema, type HousingInformationFormData } from '@/schemas/adoptionSchema'
+import { getAdopterProfile, updateAdopterProfile } from '@/services/users'
 import { useAuthStore } from '@/store/auth'
-import { AdoptionRequestStatus, initPetsResponse, type AdoptionRequest, type AdoptionRequestsResponse, type PetsResponse } from '@/types.d'
-import { useEffect, useState } from 'react'
+import { zodResolver } from '@hookform/resolvers/zod/src/zod.js'
+import { useEffect } from 'react'
+import { Controller, useForm } from 'react-hook-form'
 import { toast } from 'sonner'
 
 export default function ProfilePage () {
-  const [adoptionRequests, setAdoptionRequests] = useState<AdoptionRequestsResponse>(initPetsResponse<AdoptionRequest>)
-  const [favorites, setFavorites] = useState<PetsResponse>(initPetsResponse)
-  const [loading, setLoading] = useState(true)
+  const user = useAuthStore((state) => state.user)
+  const { name: userName, email } = user!
 
-  const { data: adoptionRequestsData, total } = adoptionRequests
+  const { register, handleSubmit, control, formState: { errors, isSubmitting }, reset } = useForm<HousingInformationFormData>({
+    resolver: zodResolver(housingInformationSchema),
+    defaultValues: {
+      housing: 'house',
+    },
+  })
+
+  const onSubmit = async (data: HousingInformationFormData) => {
+    try {
+      await updateAdopterProfile(data)
+      toast.success('Profile updated successfully')
+    } catch {
+      toast.error('Failed to update profile')
+    }
+  }
 
   useEffect(() => {
-    const loadData = async () => {
-      try {
-        const [adoptionRequests, favorites] = await Promise.all([
-          getAdoptionRequests({ status: AdoptionRequestStatus.PENDING, limit: 2, offset: 0 }),
-          getFavorites({ limit: 2, offset: 0 }),
-        ])
-        setAdoptionRequests(adoptionRequests)
-        setFavorites(favorites)
-      } catch {
-        toast.error('Failed to load data')
-      } finally {
-        setLoading(false)
-      }
-    }
-    loadData()
+    getAdopterProfile().then((profile) => {
+      reset(profile)
+    })
   }, [])
 
-  const { name } = useAuthStore(state => state.user)!
-  const firstName = name.split(' ')[0]
-
+  const { phone_number, address, other_pets } = errors
+  const textButton = isSubmitting ? 'Saving...' : 'Save changes'
   return (
-    <main className="flex flex-col gap-10">
-      <section>
-        <h1 className="text-4xl font-bold">Hi, {firstName} 👋</h1>
-        <p className="text-gray-500 mt-2 font-light">Here you can manage your profile and your pets.</p>
+    <>
+      <DashboardTitle title="Profile Settings" description="Manage your account information and preferences" />
+      <section className='bg-white rounded-xl p-6 shadow-xs mt-6 flex flex-col gap-6'>
+        <h2 className='text-xl font-semibold'>
+          Personal Information
+        </h2>
+        <div className='flex flex-col md:flex-row gap-6'>
+          <FormField  title='Full Name' id='name'>
+            <InputText disabled placeholder='e.g. John Doe' defaultValue={userName} hasBorder={true}/>
+          </FormField>
+          <FormField title='Email' id='email'>
+            <InputText disabled placeholder='e.g. [EMAIL_ADDRESS]' defaultValue={email} hasBorder={true}/>
+          </FormField>
+        </div>
       </section>
-      <DashboardStats totalAdoptionRequests={total}/>
-      {loading && <Loading />}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2">
-          <AdoptionStatusList requests={adoptionRequestsData}/>
+      <form onSubmit={handleSubmit(onSubmit)} className='bg-white rounded-xl p-6 shadow-xs mt-6 flex flex-col gap-6'>
+        <h2 className='text-xl font-semibold'>
+          Housing Information
+        </h2>
+        <div className='flex flex-col md:flex-row gap-6'>
+          <FormField title='Phone' id='phone_number' error={phone_number?.message}>
+            <InputText {...register('phone_number')} id='phone_number' placeholder='e.g. +123456789' hasBorder={true} className='placeholder:text-gray-500'/>
+          </FormField>
+          <FormField title='Address' id='address' error={address?.message}>
+            <InputText {...register('address')} id='address' placeholder='e.g. 123 Main St' hasBorder={true} className='placeholder:text-gray-500'/>
+          </FormField>
+
         </div>
-        <div className="lg:col-span-1">
-          <RecentFavoritesSection pets={favorites.data} />
+        <FormField title="Type of housing" >
+          <Controller
+            name='housing'
+            control={control}
+            render={({ field }) => (
+              <div className='grid grid-cols-1 md:grid-cols-3 gap-4'>
+                {Object.values(HOUSING_OPTIONS).map((option) => (
+                  <OptionButton
+                    key={option.value}
+                    icon={option.icon}
+                    label={option.label}
+                    isSelected={field.value === option.value}
+                    onClick={() => field.onChange(option.value)}
+                  />
+                ))}
+              </div>
+            )}
+          />
+        </FormField>
+        <div className='flex flex-col gap-2'>
+          <FormField title="Is there any other pets in your home?" id="other_pets" error={other_pets?.message}>
+            <InputText {...register('other_pets')} id='other_pets' placeholder='e.g. Yes, I have a dog and a cat' hasBorder={true} className='placeholder:text-gray-500'/>
+          </FormField>
+          <p className='text-sm text-lime-700/70'>If you don't have another pets, you can leave this field empty</p>
         </div>
-      </div>
-    </main>
+        <GreenButton type='submit' disabled={isSubmitting} className='md:self-end px-6'>{textButton}</GreenButton>
+      </form>
+    </>
   )
 }

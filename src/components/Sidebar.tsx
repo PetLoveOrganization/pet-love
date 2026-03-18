@@ -19,23 +19,23 @@ const MENU_ITEMS: MenuItem[] = [
   {
     icon: LayoutDashboard,
     label: 'Home',
-    path: '/profile',
+    path: '/account',
   },
   {
     icon: FolderOpen,
     label: 'My Applications',
-    path: '/profile/requests',
+    path: '/account/requests',
   },
   {
     icon: HeartFilled,
     label: 'Favorites',
-    path: '/profile/favorites',
+    path: '/account/favorites',
     showBadge: true,
   },
   {
     icon: User,
-    label: 'Account',
-    path: '/profile/account',
+    label: 'Profile',
+    path: '/account/profile',
   },
 ]
 
@@ -79,7 +79,7 @@ export function Sidebar ({ isOpen, toggleMenu }: SidebarProps) {
             <NavLink
               key={item.path}
               to={item.path}
-              end={item.path === '/profile'}
+              end={item.path === '/account'}
               className={({ isActive }) => `
               flex items-center justify-between px-4 py-3 rounded-lg transition-colors
               ${isActive

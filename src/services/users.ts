@@ -1,4 +1,5 @@
 import { apiFetch } from '@/api/client'
+import type { HousingInformationFormData } from '@/schemas/adoptionSchema'
 import type { LoginParams, AuthResponse, RegisterParams, User, AdoptionRequestParams, PetsResponse, AdoptionRequestsResponse } from '@/types'
 
 export const login = ({ email, password }: LoginParams): Promise<AuthResponse> => {
@@ -53,5 +54,19 @@ export const getFavorites = ({ offset, limit }: { offset: number, limit: number 
   if (limit) params.append('limit', limit.toString())
   return apiFetch<PetsResponse>('/account/favorites?' + params.toString(), {
     credentials: 'include',
+  })
+}
+
+export const getAdopterProfile = (): Promise<HousingInformationFormData> => {
+  return apiFetch<HousingInformationFormData>('/account/adopter-profile', {
+    credentials: 'include',
+  })
+}
+
+export const updateAdopterProfile = (profile: HousingInformationFormData): Promise<void> => {
+  return apiFetch<void>('/account/adopter-profile', {
+    method: 'PATCH',
+    credentials: 'include',
+    body: JSON.stringify(profile),
   })
 }
