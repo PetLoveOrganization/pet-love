@@ -1,5 +1,8 @@
 import { apiFetch } from '@/api/client'
-import { PetStates, type Filters, type Pet, type PetsResponse } from '@/types.d'
+import { PetStates, type Filters, type Pet, type PetsResponse, type Requirement } from '@/types.d'
+export const getAdoptionRequirements = (): Promise<Requirement[]> => {
+  return apiFetch<Requirement[]>('/requirements')
+}
 export const getAllPets = ({ filters, actions, offset, limit }: { filters: Filters, actions: PetStates, offset: number, limit: number }): Promise<PetsResponse> => {
   const params = new URLSearchParams()
   if (filters.text) params.append('text', filters.text)
@@ -23,6 +26,14 @@ export const getPetById = (id: string): Promise<Pet> => {
 export const togglePetFavorite = (id: string): Promise<void> => {
   return apiFetch<void>(`/pets/${id}/favorite`, {
     method: 'POST',
+    credentials: 'include',
+  })
+}
+
+export const createPet = (data: FormData): Promise<Pet> => {
+  return apiFetch<Pet>('/pets', {
+    method: 'POST',
+    body: data,
     credentials: 'include',
   })
 }

@@ -21,6 +21,8 @@ import { DashboardLayout } from './components/Layouts/DashboardLayout'
 import MyApplicationsPage from './pages/MyApplicationsPage'
 import { FavoritesPage } from './pages/Favorites'
 import ProfilePage from './pages/Profile'
+import PostForAdoptionPage from './pages/PostForAdoption'
+import MyPetsPage from './pages/MyPets'
 function App () {
   const checkAuth = useAuthStore((state) => state.checkAuth)
   const user = useAuthStore((state) => state.user)
@@ -61,6 +63,8 @@ function App () {
           <Route element={<DashboardLayout />}>
             <Route path='account' >
               <Route index element={<AccountPage />} />
+              <Route path='my-pets' element={<MyPetsPage />} />
+              <Route path='adoption' element={<PostForAdoptionPage />} />
               <Route path='requests' element={<MyApplicationsPage />} />
               <Route path='favorites' element={<FavoritesPage />} />
               <Route path='profile' element={<ProfilePage />} />

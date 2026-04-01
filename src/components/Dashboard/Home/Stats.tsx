@@ -1,6 +1,5 @@
 import { Description } from '@/icons/Description'
 import { Heart } from '@/icons/Heart'
-import { Mail } from '@/icons/Mail'
 import { useFavoriteStore } from '@/store/favorites'
 import React from 'react'
 interface StatCardProps {
@@ -56,14 +55,14 @@ export const DashboardStats = ({ totalAdoptionRequests }: Props) => {
       iconColorClass: 'text-red-500',
       iconBgClass: 'bg-red-50',
     },
-    {
-      title: 'Messages',
-      value: '5',
-      icon: Mail,
-      badgeText: '3 unread',
-      iconColorClass: 'text-purple-600',
-      iconBgClass: 'bg-purple-50',
-    },
+    // {
+    //   title: 'Messages',
+    //   value: '5',
+    //   icon: Mail,
+    //   badgeText: '3 unread',
+    //   iconColorClass: 'text-purple-600',
+    //   iconBgClass: 'bg-purple-50',
+    // },
   ]
 
   return (

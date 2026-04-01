@@ -8,6 +8,8 @@ import { NavLink } from 'react-router'
 import { useAuthStore } from '@/store/auth'
 import { SignOut } from '@/icons/SignOut'
 import { XIcon } from '@/icons/X'
+import { PetLeg } from '@/icons/PetLeg'
+import { ClipboardHeart } from '@/icons/ClipboardHeart'
 
 interface MenuItem {
   icon: React.ComponentType<{ className?: string }>
@@ -20,6 +22,16 @@ const MENU_ITEMS: MenuItem[] = [
     icon: LayoutDashboard,
     label: 'Home',
     path: '/account',
+  },
+  {
+    icon: PetLeg,
+    label: 'My Pets',
+    path: '/account/my-pets',
+  },
+  {
+    icon: ClipboardHeart,
+    label: 'Post for Adoption',
+    path: '/account/adoption',
   },
   {
     icon: FolderOpen,

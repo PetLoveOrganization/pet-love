@@ -29,9 +29,14 @@ export const apiFetch = async <T>(
 ): Promise<T> => {
   const url = `${API_HOST}${endpoint}`
 
-  const defaultHeaders = {
+  const defaultHeaders: Record<string, string> = {
     'Content-Type': 'application/json',
     ...options.headers,
+  }
+
+  // If we are sending FormData, let the browser set the Content-Type with the boundary
+  if (options.body instanceof FormData) {
+    delete defaultHeaders['Content-Type']
   }
 
   const config: FetchOptions = {
