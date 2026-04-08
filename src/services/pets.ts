@@ -37,3 +37,9 @@ export const createPet = (data: FormData): Promise<Pet> => {
     credentials: 'include',
   })
 }
+
+export const getMyPets = (): Promise<Pet[]> => {
+  return apiFetch<{data: Pet[]}>('/account/me/pets', {
+    credentials: 'include',
+  }).then(res => res.data)
+}

@@ -145,6 +145,9 @@ export interface Pet {
   requirements: Requirement[];
   recovery_fee: number;
   user_context: UserContext
+  is_adopted: boolean
+  deleted_at?: string
+  adoption_requests_count?: number
 }
 
 export interface UserContext {
